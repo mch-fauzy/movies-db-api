@@ -1,0 +1,36 @@
+{
+  "name": "movies_crud_api_auth",
+  "version": "1.0.0",
+  "description": "Movie database CRUD API with Middleware for Authentication and Authorization",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mch-fauzy/movies-crud-api-auth.git"
+  },
+  "keywords": [
+    "Javascript",
+    "Git",
+    "CRUD",
+    "Movie",
+    "PostgreSQL",
+    "Middleware",
+    "Authentication",
+    "Authorization",
+    "JWT"
+  ],
+  "author": "Muchamad Fauzy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mch-fauzy/movies-crud-api-auth/issues"
+  },
+  "homepage": "https://github.com/mch-fauzy/movies-crud-api-auth#readme",
+  "dependencies": {
+    "module": "*"
+} 
+  
+  
+}
+
