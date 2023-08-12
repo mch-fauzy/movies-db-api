@@ -25,7 +25,7 @@
     }
   ],
   "paths": {
-    "/register": {
+    "/v1/register": {
       "post": {
         "tags": [
           "auth"
@@ -55,7 +55,7 @@
         }
       }
     },
-    "/login": {
+    "/v1/login": {
       "post": {
         "tags": [
           "auth"
@@ -350,7 +350,7 @@
             "type": "string"
           },
           "year": {
-            "type": "integer"
+            "type": "string"
           }
         }
       },
@@ -364,7 +364,7 @@
             "type": "string"
           },
           "year": {
-            "type": "integer"
+            "type": "string"
           }
         }
       }

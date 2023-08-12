@@ -33,12 +33,14 @@ To access the API documentation using Swagger, follow these steps:
 3. You'll see the Swagger UI interface with a list of endpoints, request parameters, and example requests/responses.
 4. You can interact with the API directly from the Swagger interface.
 
+**NOTE: Swagger documentation does not have upload file API**
+
 ## API Endpoints
 
 ### Public Endpoints
 
-- `POST /auth/register`: Register a new user. Requires `email`, `gender`, `password`, and `role` fields in the request body. (Ideally role only can be set by admin)
-- `POST /auth/login`: User login. Requires `email` and `password` fields in the request body.
+- `POST /v1/register`: Register a new user. Requires `email`, `gender`, `password`, and `role` fields in the request body. (Ideally role only can be set by admin)
+- `POST /v1/login`: User login. Requires `email` and `password` fields in the request body.
 
 ### Users Endpoints
 
@@ -48,6 +50,7 @@ To access the API documentation using Swagger, follow these steps:
 
 - `GET /v1/movies`: Get all movies with pagination. Requires authentication. Parameters `page` (default: 1) and `size` (default: 10) are optional for pagination.
 - `POST /v1/movies`: Insert a new movie. Requires authentication and admin role. Requires `title`, `genres`, and `year` fields in the request body.
+- `POST v1/movies/:id/upload`: Upload a photo into movie table. Requires authentication and admin role. Requires `file` to upload in the request body
 - `DELETE /v1/movies/:id`: Delete a movie by ID. Requires authentication and admin role.
 - `PUT /v1/movies/:id`: Update a movie by ID. Requires authentication and admin role. Requires `title`, `genres`, and `year` fields in the request body.
 
