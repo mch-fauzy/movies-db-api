@@ -28,9 +28,7 @@
   },
   "homepage": "https://github.com/mch-fauzy/movies-crud-api-auth#readme",
   "dependencies": {
-    "module": "*"
-} 
-  
-  
+    "module": "*",
+    "multer": "^1.4.5-lts.1"
+  }
 }
-

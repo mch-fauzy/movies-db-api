@@ -1,20 +1,23 @@
-const pool = require('../db/postgresql');
+const pool = require('../infras/postgresql');
+const { MovieModel } = require('../models/index');
 
-class Movie {
+class MovieRepository {
     static async getMovies(page = 1, size = 10) {
         try {
-            page = parseInt(page)
-            size = parseInt(size)
+            page = parseInt(page);
+            size = parseInt(size);
             const offset = (page - 1) * size;
-            const query = 'SELECT * FROM movies LIMIT $1 OFFSET $2';
+            const query = 'SELECT id, title, genres, year, photo FROM movies LIMIT $1 OFFSET $2';
             const result = await pool.query(query, [size, offset]);
 
             const totalRows = parseInt((await pool.query('SELECT COUNT(*) FROM movies')).rows[0].count);
             const totalPages = Math.ceil(totalRows / size);
+
+            const movies = result.rows.map(row => MovieModel.fromDatabase(row));
             return {
-                data: result.rows,
+                data: movies,
                 totalData: totalRows,
-                totalPages,
+                totalPages: totalPages,
                 currentPage: page,
                 nextPage: page < totalPages ? page + 1 : null,
                 previousPage: page > 1 ? page - 1 : null,
@@ -26,17 +29,35 @@ class Movie {
 
     static async insertMovie(title, genres, year) {
         try {
-            const query = 'INSERT INTO movies (id, title, genres, year) VALUES ($1, $2, $3, $4)';
+          const query = 'INSERT INTO movies (id, title, genres, year) VALUES ($1, $2, $3, $4)';
 
-            if (!title || !genres || !year) {
-                throw new Error('title, genres and year fields are required');
+          if (!title || !genres || !year) {
+            throw new Error('title, genres and year fields are required');
+        }
+    
+          const maxIdResult = await pool.query('SELECT MAX(id) FROM movies');
+          const maxId = maxIdResult.rows[0].max || 0;
+          const id = maxId + 1;
+    
+          await pool.query(query, [id, title, genres, year]);
+        } catch (error) {
+          throw error;
+        }
+      }
+
+    static async uploadMoviePhoto(id, filename) {
+        try {
+            const movieExistsQuery = 'SELECT id FROM movies WHERE id = $1';
+            const movieExistsResult = await pool.query(movieExistsQuery, [id]);
+
+            if (movieExistsResult.rows.length === 0) {
+                throw new Error('Movie not found');
             }
-            
-            // Get the maximum ID value from the movies table
-            const maxIdResult = await pool.query('SELECT MAX(id) FROM movies');
-            const maxId = maxIdResult.rows[0].max || 0;
-            const id = maxId + 1;
-            await pool.query(query, [id, title, genres, year]);
+
+            const query = 'UPDATE movies SET photo = $2 WHERE id = $1';
+            await pool.query(query, [id, filename]);
+
+            return filename;
         } catch (error) {
             throw error;
         }
@@ -79,4 +100,5 @@ class Movie {
     }
 }
 
-module.exports = Movie;
+module.exports = MovieRepository;
+
