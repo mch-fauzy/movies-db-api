@@ -2,7 +2,17 @@
 
 This is a CRUD (Create, Read, Update, Delete) API for managing movie records with user authentication. The API allows you to perform various operations on movies and users using different endpoints.
 
-**Note: This is for mock only, need adjustment if want to use in the production environment**
+**Note: This is for mock only, adjustments are needed if you want to use it in a production environment**
+
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Swagger Documentation](#swagger-documentation)
+- [API Endpoints](#api-endpoints)
+- [Error Handling](#error-handling)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 
@@ -16,14 +26,24 @@ This is a CRUD (Create, Read, Update, Delete) API for managing movie records wit
 
 To get started with the API, follow the steps below:
 
-1. Clone this repository: `git clone https://github.com/mch-fauzy/movies-crud-api-auth.git`
-2. Navigate to the project directory: `cd movies-crud-api-auth`
+1. Clone this repository: 
+    ```
+    git clone https://github.com/mch-fauzy/movies-crud-api-auth.git
+    ```
+
+2. Navigate to the project directory: 
+    ```
+    cd movies-crud-api-auth
+    ```
 3. Install the required dependencies
 4. Edit the database configuration in `.env` with your PostgreSQL credentials.
 5. Import the required database schema from `migrations/movie-database.sql` into your PostgreSQL database using a tool like pgAdmin's restore function.
-6. Start the server: `node app.js`
+6. Start the server: 
+    ```
+    node app.js
+    ```
 
-The API will be available at http://localhost:3000.
+The API will be available at [http://localhost:3000](http://localhost:3000).
 
 ## Swagger Documentation
 
@@ -36,24 +56,64 @@ To access the API documentation using Swagger, follow these steps:
 
 **NOTE: Swagger documentation does not have upload file API**
 
+Certainly! Here's a simplified version of the API Endpoints section for easier readability:
+
 ## API Endpoints
 
 ### Public Endpoints
 
-- `POST /v1/register`: Register a new user. Requires `email`, `gender`, `password`, and `role` fields in the request body. (Ideally role only can be set by admin)
-- `POST /v1/login`: User login. Requires `email` and `password` fields in the request body.
+#### Register a New User
+- **Endpoint:** `POST /v1/register`
+- **Description:** Register a new user (Ideally role only can be set by admin or seeded)
+- **Request Body Parameters:** `email`, `gender`, `password`, `role`
+
+#### User Login
+- **Endpoint:** `POST /v1/login`
+- **Description:** User login.
+- **Request Body Parameters:** `email`, `password`
 
 ### Users Endpoints
 
-- `GET /v1/users`: Get all users with pagination. Requires authentication and admin role. Parameters `page` (default: 1) and `size` (default: 10) are optional for pagination.
+#### Get All Users
+- **Endpoint:** `GET /v1/users`
+- **Description:** Get all users with pagination.
+- **Authentication:** Requires authentication and admin role.
+- **Query Parameters:** `page` (default: 1), `size` (default: 10)
 
 ### Movies Endpoints
 
-- `GET /v1/movies`: Get all movies with pagination. Requires authentication. Parameters `page` (default: 1) and `size` (default: 10) are optional for pagination.
-- `POST /v1/movies`: Insert a new movie. Requires authentication and admin role. Requires `title`, `genres`, and `year` fields in the request body.
-- `POST /v1/movies/:id/upload`: Upload a photo into movie table. Requires authentication and admin role. Requires photo `file` to upload in the request body. Where ``:id`` is the ID of the movie you want to upload the photo for. The system will store the uploaded image in the `public/images` directory and associate it with the specified movie.
-- `DELETE /v1/movies/:id`: Delete a movie by ID. Requires authentication and admin role.
-- `PUT /v1/movies/:id`: Update a movie by ID. Requires authentication and admin role. Requires `title`, `genres`, and `year` fields in the request body.
+#### Get All Movies
+- **Endpoint:** `GET /v1/movies`
+- **Description:** Get all movies with pagination.
+- **Authentication:** Requires authentication.
+- **Query Parameters:** `page` (default: 1), `size` (default: 10)
+
+#### Insert a New Movie
+- **Endpoint:** `POST /v1/movies`
+- **Description:** Insert a new movie.
+- **Authentication:** Requires authentication and admin role.
+- **Request Body Parameters:** `title`, `genres`, `year`
+
+#### Upload Movie Photo
+- **Endpoint:** `POST /v1/movies/:id/upload`
+- **Description:** Upload a photo for a movie.
+- **Authentication:** Requires authentication and admin role.
+- **Request Body Parameters:** `file` (photo)
+- **Path Parameter:** `id` (movie ID)
+- **Notes:** The uploaded image is stored in the `public/images` directory and associated with the specified movie.
+
+#### Delete a Movie
+- **Endpoint:** `DELETE /v1/movies/:id`
+- **Description:** Delete a movie by ID.
+- **Authentication:** Requires authentication and admin role.
+- **Path Parameter:** `id` (movie ID)
+
+#### Update a Movie
+- **Endpoint:** `PUT /v1/movies/:id`
+- **Description:** Update a movie by ID.
+- **Authentication:** Requires authentication and admin role.
+- **Path Parameter:** `id` (movie ID)
+- **Request Body Parameters:** `title`, `genres`, `year`
 
 ## Error Handling
 
