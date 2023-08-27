@@ -36,7 +36,6 @@ To get started with the API, follow the steps below:
     cd movies-crud-api-auth
     ```
 3. Install the required dependencies:
-   
    ```
    npm install
    ```
