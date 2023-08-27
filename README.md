@@ -35,12 +35,17 @@ To get started with the API, follow the steps below:
     ```
     cd movies-crud-api-auth
     ```
-3. Install the required dependencies
+3. Install the required dependencies:
+   
+   ```
+   npm install
+   ```
+
 4. Edit the database configuration in `.env` with your PostgreSQL credentials.
 5. Import the required database schema from `migrations/movie-database.sql` into your PostgreSQL database using a tool like pgAdmin's restore function.
 6. Start the server: 
     ```
-    node app.js
+    npm run dev
     ```
 
 The API will be available at [http://localhost:3000](http://localhost:3000).
