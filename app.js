@@ -24,10 +24,10 @@ app.use('/v1', UserRouter);
 app.use('/v1', MovieRouter);
 
 // Error handling middleware
-app.use((err, res) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong!');
-});
+// app.use((err, res) => {
+//     console.error(err.stack);
+//     res.status(500).send('Something went wrong!');
+// });
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
