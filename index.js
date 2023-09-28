@@ -2,9 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 const cors = require('cors')
-const { UserRouter, MovieRouter } = require('../routes/index');
+const { UserRouter, MovieRouter } = require('./routes/index');
 const swaggerUi = require('swagger-ui-express')
-const swaggerDocument = require('../swagger.json')
+const swaggerDocument = require('./swagger.json')
 const port = 3000;
 
 //sharing resource
