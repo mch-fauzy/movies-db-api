@@ -29,6 +29,10 @@ app.use('/v1', MovieRouter);
 //     res.status(500).send('Something went wrong!');
 // });
 
+app.get('/home', (req, res) => {
+    res.status(200).json('Welcome, your app is working well');
+  })
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
