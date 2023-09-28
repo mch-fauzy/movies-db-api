@@ -2,10 +2,10 @@
   "name": "movies_crud_api_auth",
   "version": "1.0.0",
   "description": "Movie database CRUD API with Middleware for Authentication and Authorization",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node ./app.js"
+    "dev": "node ./index.js"
   },
   "repository": {
     "type": "git",
