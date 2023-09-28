@@ -6,6 +6,8 @@ const { UserRouter, MovieRouter } = require('./routes/index');
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json')
 const port = 3000;
+const CSS_URL =
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 
 //sharing resource
 app.use(cors());
@@ -21,7 +23,7 @@ app.get('/home', (req, res) => {
   res.status(200).json('Welcome, your app is working well');
 })
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customCssUrl: CSS_URL }))
 
 app.use('/v1', UserRouter);
 app.use('/v1', MovieRouter);
