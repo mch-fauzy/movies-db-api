@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://movies-crud-api-auth.vercel.app/"
+      "url": "https://movies-db-api.vercel.app/"
     }
   ],
   "tags": [
