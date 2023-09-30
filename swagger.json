@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Movies CRUD API",
+    "title": "Movies Database API",
     "description": "API for managing movies and users with authentication and authorization",
     "version": "1.0.0"
   },
