@@ -9,9 +9,9 @@ class UserService {
         }
     }
 
-    static async registerUser(email, gender, password, role) {
+    static async registerUser(email, gender, password) {
         try {
-            return await UserRepository.registerUser(email, gender, password, role);
+            return await UserRepository.registerUser(email, gender, password);
         } catch (error) {
             throw error;
         }

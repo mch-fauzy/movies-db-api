@@ -32,14 +32,14 @@ class UserRepository {
         }
     }
 
-    static async registerUser(email, gender, password, role) {
+    static async registerUser(email, gender, password) {
         try {
             const query = 'INSERT INTO users (id, email, gender, password, role) VALUES ($1, $2, $3, $4, $5)';
 
             const emailExistsQuery = 'SELECT id FROM users WHERE email = $1';
             const emailExistsResult = await pool.query(emailExistsQuery, [email]);
 
-            if (!email || !password || !gender || !role) {
+            if (!email || !password || !gender) {
                 throw new Error('email, password, gender and role fields are required');
             }
 
@@ -51,6 +51,7 @@ class UserRepository {
             const maxId = maxIdResult.rows[0].max || 0;
             const id = maxId + 1;
             const encryptedPassword = encryptPassword(password);
+            const role = "non-admin";
             await pool.query(query, [id, email, gender, encryptedPassword, role]);
         } catch (error) {
             throw error;
