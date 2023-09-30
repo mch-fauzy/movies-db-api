@@ -22,7 +22,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customC
 app.use('/v1', UserRouter);
 app.use('/v1', MovieRouter);
 
-app.get('/home', (req, res) => {
+app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
   res.status(200).json('Welcome, your app is working well');
