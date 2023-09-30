@@ -2,7 +2,7 @@
 
 This is a CRUD (Create, Read, Update, Delete) API for managing movie records with user authentication. The API allows you to perform various operations on movies and users using different endpoints.
 
-You can try the API in [here](https://movies-crud-api-auth.vercel.app/api-docs/) or deploy it manually below.
+You can try the API in [here](https://movies-crud-api-auth.vercel.app) or deploy it manually below.
 
 **Note: This is for mock only, adjustments are needed if you want to use it in a production environment**
 
