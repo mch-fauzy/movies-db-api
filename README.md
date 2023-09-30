@@ -30,12 +30,12 @@ To get started with the API, follow the steps below:
 
 1. Clone this repository: 
     ```
-    git clone https://github.com/mch-fauzy/movies-crud-api-auth.git
+    git clone https://github.com/mch-fauzy/movies-db-api.git
     ```
 
 2. Navigate to the project directory: 
     ```
-    cd movies-crud-api-auth
+    cd movies-db-api
     ```
 3. Install the required dependencies:
    ```
