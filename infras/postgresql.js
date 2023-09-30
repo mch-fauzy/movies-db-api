@@ -9,6 +9,7 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
+  connectionString: "postgres://default:AoarMLF4QG8x@ep-flat-art-89761230-pooler.us-east-1.postgres.vercel-storage.com:5432/verceldb?sslmode=require",
 });
 
 module.exports = pool;
