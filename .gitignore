@@ -6,4 +6,3 @@ migrations/*.Identifier
 *.Identifier
 .env
 *.txt
-.vercel

@@ -2,6 +2,8 @@
 
 This is a CRUD (Create, Read, Update, Delete) API for managing movie records with user authentication. The API allows you to perform various operations on movies and users using different endpoints.
 
+You can try the API in [here](https://movies-crud-api-auth.vercel.app/api-docs/) or deploy it manually below.
+
 **Note: This is for mock only, adjustments are needed if you want to use it in a production environment**
 
 ## Table of Contents
@@ -40,7 +42,7 @@ To get started with the API, follow the steps below:
    npm install
    ```
 
-4. Edit the database configuration in `.env` with your PostgreSQL credentials.
+4. Edit the database configuration in `.env` with your PostgreSQL credentials and configure the setting in `./infras/postgresql.js`.
 5. Import the required database schema from `migrations/movie-database.sql` into your PostgreSQL database using a tool like pgAdmin's restore function.
 6. Start the server: 
     ```
@@ -58,7 +60,7 @@ To access the API documentation using Swagger, follow these steps:
 3. You'll see the Swagger UI interface with a list of endpoints, request parameters, and example requests/responses.
 4. You can interact with the API directly from the Swagger interface.
 
-**NOTE: Swagger documentation does not have upload file API**
+**NOTE: Swagger documentation does not have upload file Endpoint**
 
 Certainly! Here's a simplified version of the API Endpoints section for easier readability:
 
@@ -67,14 +69,27 @@ Certainly! Here's a simplified version of the API Endpoints section for easier r
 ### Public Endpoints
 
 #### Register a New User
-- **Endpoint:** `POST /v1/register`
-- **Description:** Register a new user (Ideally role only can be set by admin or seeded)
-- **Request Body Parameters:** `email`, `gender`, `password`, `role`
+- **Endpoint:** `POST /v1/auth/register`
+- **Description:** Register a new user (first admin can be seeded)
+- **Request Body Parameters:** `email`, `gender`, `password`
 
-#### User Login
-- **Endpoint:** `POST /v1/login`
+#### Login
+- **Endpoint:** `POST /v1/auth/login`
 - **Description:** User login.
 - **Request Body Parameters:** `email`, `password`
+- **Example:**
+```
+Admin:
+    email: admin@gmail.com
+    password: adminpassword
+```
+
+```
+Non-Admin:
+    email: non.admin@gmail.com
+    password: nonadminpassword
+```
+
 
 ### Users Endpoints
 
