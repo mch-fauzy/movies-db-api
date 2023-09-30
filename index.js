@@ -20,12 +20,7 @@ app.use(express.static('public'));
 app.use('/v1', UserRouter);
 app.use('/v1', MovieRouter);
 
-// app.get('/', (req, res) => {
-//   res.setHeader('Content-Type', 'text/html');
-//   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-//   res.status(200).json('Welcome, your app is working well');
-// })
-
+// Api docs
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customCssUrl: CSS_URL }))
 
 app.listen(port, () => {
