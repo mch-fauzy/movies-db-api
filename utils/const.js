@@ -5,6 +5,9 @@ const SHARED = {
     BAD_REQUEST: "BadRequestError",
     INTERNAL_ERROR: "InternalServerError",
   },
+  ROLE: {
+    NON_ADMIN: "non-admin",
+  }
 };
 
 module.exports = SHARED;
