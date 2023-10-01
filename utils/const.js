@@ -8,8 +8,9 @@ const SHARED = {
   },
   ROLE: {
     NON_ADMIN: "non-admin",
-    ADMIN: "admin"
-  }
+    ADMIN: "admin",
+  },
+  AUTHORIZATION_HEADER: "authorization",
 };
 
 module.exports = SHARED;
