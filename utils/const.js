@@ -4,6 +4,7 @@ const SHARED = {
     UNAUTHORIZED: "AuthenticationError",
     BAD_REQUEST: "BadRequestError",
     INTERNAL_ERROR: "InternalServerError",
+    CONFLICT_ERROR: "ConflictError",
   },
   ROLE: {
     NON_ADMIN: "non-admin",
