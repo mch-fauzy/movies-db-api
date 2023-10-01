@@ -2,8 +2,9 @@ const pool = require('../infras/postgresql');
 const { UserModel } = require('../models/index');
 const { encryptPassword, decryptPassword } = require('../utils/password');
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-dotenv.config();
+const logger = require('../utils/logger')
+const { NotFoundError, AuthenticationError, ConflictError, InternalError } = require('../utils/error');
+const SHARED = require('../utils/const')
 
 class UserRepository {
     static async getUsers(page = 1, size = 10) {
@@ -27,34 +28,31 @@ class UserRepository {
                 nextPage: page < totalPages ? page + 1 : null,
                 previousPage: page > 1 ? page - 1 : null,
             };
-        } catch (error) {
-            throw error;
+        } catch {
+            logger.error("[UserRepository.getUsers] Internal server error occurred");
+            throw new InternalError("Internal server error occurred");
         }
     }
 
     static async registerUser(email, gender, password) {
         try {
-            const query = 'INSERT INTO users (id, email, gender, password, role) VALUES ($1, $2, $3, $4, $5)';
-
             const emailExistsQuery = 'SELECT id FROM users WHERE email = $1';
             const emailExistsResult = await pool.query(emailExistsQuery, [email]);
 
-            if (!email || !password || !gender) {
-                throw new Error('email, password, gender and role fields are required');
-            }
-
             if (emailExistsResult.rows.length > 0) {
-                throw new Error('Email already exists');
+                logger.error("[UserRepository.registerUser] Email already exists");
+                throw new ConflictError('Email already exists');
             }
 
+            const query = 'INSERT INTO users (id, email, gender, password, role) VALUES ($1, $2, $3, $4, $5)';
             const maxIdResult = await pool.query('SELECT MAX(id) FROM users');
             const maxId = maxIdResult.rows[0].max || 0;
             const id = maxId + 1;
             const encryptedPassword = encryptPassword(password);
-            const role = "non-admin";
+            const role = SHARED.ROLE.NON_ADMIN;
             await pool.query(query, [id, email, gender, encryptedPassword, role]);
-        } catch (error) {
-            throw error;
+        } catch (err) {
+            throw err;
         }
     }
 
@@ -62,19 +60,24 @@ class UserRepository {
         try {
             const query = 'SELECT id, email, password, role FROM users WHERE email = $1';
             const result = await pool.query(query, [email]);
-            const user = result.rows[0];
 
-            if (!email || !password) {
-                throw new Error('email and password fields are required');
+            if (result.rowCount === 0) {
+                logger.error("[UserRepository.loginUser] User not found");
+                throw new NotFoundError('User not found');
             }
 
+            const user = result.rows[0];
             const decryptedPassword = decryptPassword(user.password)
             if (user && decryptedPassword === password) {
                 const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
                 return token;
+            } else {
+                logger.error("[UserRepository.loginUser] Incorrect password");
+                throw new AuthenticationError("Incorrect password");
             }
-        } catch (error) {
-            throw error;
+
+        } catch (err) {
+            throw err;
         }
     }
 }

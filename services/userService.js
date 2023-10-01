@@ -1,27 +1,37 @@
 const { UserRepository } = require('../repository/index');
+const { BadRequestError } = require('../utils/error');
+const logger = require('../utils/logger');
 
 class UserService {
     static async getUsers(page, size) {
         try {
             return await UserRepository.getUsers(page, size);
-        } catch (error) {
-            throw error;
+        } catch (err) {
+            throw err;
         }
     }
 
     static async registerUser(email, gender, password) {
         try {
+            if (!email || !password || !gender) {
+                logger.error("[UserService.registerUser] Email, password, and gender fields are required");
+                throw new BadRequestError('Email, password, and gender fields are required');
+            }
             return await UserRepository.registerUser(email, gender, password);
-        } catch (error) {
-            throw error;
+        } catch (err) {
+            throw err;
         }
     }
 
     static async loginUser(email, password) {
         try {
+            if (!email || !password) {
+                logger.error("[UserService.loginUser] Email and password fields are required");
+                throw new BadRequestError("Email and password fields are required")
+            }
             return await UserRepository.loginUser(email, password);
-        } catch (error) {
-            throw error;
+        } catch (err) {
+            throw err;
         }
     }
 }
