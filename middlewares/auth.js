@@ -9,12 +9,12 @@ function authenticateToken(req, res, next) {
     const token = authHeader && authHeader.split(' ')[1];
 
     if (token == null) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Missing token' });
+        return res.status(StatusCodes.UNAUTHORIZED).json({ errMessage: 'Missing token' });
     }
 
     jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
         if (err) {
-            return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Invalid token' });
+            return res.status(StatusCodes.UNAUTHORIZED).json({ errMessage: 'Invalid token' });
         }
         req.user = user;
         next();
@@ -23,7 +23,7 @@ function authenticateToken(req, res, next) {
 
 function authorizeAdmin(req, res, next) {
     if (req.user.role.toLowerCase() !== SHARED.ROLE.ADMIN) {
-        return res.status(StatusCodes.FORBIDDEN).json({ message: 'Unauthorized. Only admin can perform this action.' });
+        return res.status(StatusCodes.FORBIDDEN).json({ errMessage: 'Unauthorized. Only admin can perform this action.' });
     }
     next();
 }
