@@ -8,6 +8,7 @@ const SHARED = {
   },
   ROLE: {
     NON_ADMIN: "non-admin",
+    ADMIN: "admin"
   }
 };
 
