@@ -26,9 +26,17 @@ class BadRequestError extends Error {
     }
 }
 
+class ConflictError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'ConflictError';
+    }
+}
+
 module.exports = {
     NotFoundError,
     AuthenticationError,
     InternalError,
     BadRequestError,
+    ConflictError,
 };
