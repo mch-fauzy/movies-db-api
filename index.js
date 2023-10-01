@@ -5,7 +5,6 @@ const cors = require('cors')
 const { UserRouter, MovieRouter } = require('./routes/index');
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json')
-const port = 3000;
 const CSS_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 
@@ -23,8 +22,8 @@ app.use('/v1', MovieRouter);
 // Api docs
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customCssUrl: CSS_URL }))
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+app.listen(process.env.APP_PORT, () => {
+    console.log(`Server is running on port ${process.env.APP_PORT}`);
 });
 
 module.exports = app;
