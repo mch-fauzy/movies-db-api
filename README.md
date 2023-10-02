@@ -30,7 +30,7 @@ To get started with the API, follow the steps below:
 
 1. Clone this repository: 
     ```
-    git clone https://github.com/mch-fauzy/movies-db-api.git
+    git clone -b development https://github.com/mch-fauzy/movies-db-api.git
     ```
 
 2. Navigate to the project directory: 
