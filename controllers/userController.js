@@ -1,6 +1,6 @@
-const { UserService } = require('../services/index');
+const { UserService } = require('../services');
 const { StatusCodes } = require('http-status-codes');
-const SHARED = require('../utils/const')
+const { SHARED } = require('../utils');
 
 class UserController {
     static async getUsers(req, res) {

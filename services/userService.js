@@ -1,6 +1,6 @@
-const { UserRepository } = require('../repository/index');
-const { BadRequestError } = require('../utils/error');
-const logger = require('../utils/logger');
+const { UserRepository } = require('../repository');
+const { BadRequestError } = require('../utils');
+const { logger } = require('../utils');
 
 class UserService {
     static async getUsers(page, size) {
