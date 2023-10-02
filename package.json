@@ -1,5 +1,5 @@
 {
-  "name": "movies_crud_api_auth",
+  "name": "movies_db_api",
   "version": "1.0.0",
   "description": "Movie database CRUD API with Middleware for Authentication and Authorization",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mch-fauzy/movies-crud-api-auth.git"
+    "url": "git+https://github.com/mch-fauzy/movies-db-api.git"
   },
   "keywords": [
     "Javascript",
@@ -25,9 +25,9 @@
   "author": "Muchamad Fauzy",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mch-fauzy/movies-crud-api-auth/issues"
+    "url": "https://github.com/mch-fauzy/movies-db-api/issues"
   },
-  "homepage": "https://github.com/mch-fauzy/movies-crud-api-auth#readme",
+  "homepage": "https://github.com/mch-fauzy/movies-db-api#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
