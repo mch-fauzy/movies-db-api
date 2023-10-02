@@ -1,10 +1,11 @@
 const pool = require('../infras/postgresql');
-const { UserModel } = require('../models/index');
-const { encryptPassword, decryptPassword } = require('../utils/password');
+const { UserModel } = require('../models');
+const { encryptPassword, decryptPassword } = require('../utils');
 const jwt = require('jsonwebtoken');
-const logger = require('../utils/logger')
-const { NotFoundError, AuthenticationError, ConflictError, InternalError } = require('../utils/error');
-const SHARED = require('../utils/const')
+const { logger } = require('../utils')
+const { NotFoundError, AuthenticationError, ConflictError, InternalError } = require('../utils');
+const { SHARED } = require('../utils')
+const CONFIG = require('../configs');
 
 class UserRepository {
     static async getUsers(page = 1, size = 10) {
@@ -69,7 +70,7 @@ class UserRepository {
             const user = result.rows[0];
             const decryptedPassword = decryptPassword(user.password)
             if (user && decryptedPassword === password) {
-                const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+                const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, CONFIG.JWT_SECRET_KEY, { expiresIn: '1h' });
                 return token;
             } else {
                 logger.error("[UserRepository.loginUser] Incorrect password");
