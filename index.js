@@ -24,8 +24,10 @@ app.use('/v1', MovieRouter);
 // Api docs
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customCssUrl: CSS_URL }))
 
-app.listen(CONFIG.APP.PORT, () => {
-  logger.info(`Server is running on port ${CONFIG.APP.PORT}`);
-});
+if (CONFIG.APP.PORT) {
+  app.listen(CONFIG.APP.PORT, () => {
+      logger.info(`Server is running on port ${CONFIG.APP.PORT}`);
+  });
+}
 
 module.exports = app;
