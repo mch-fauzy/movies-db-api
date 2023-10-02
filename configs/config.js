@@ -9,7 +9,6 @@ const Environtment = () => {
             logger.info('[Environtment] Loaded default environment: .env');
         } else {
             logger.warn('[Environtment] Default .env file not found');
-            // process.exit(1);
         }
     } catch {
         logger.error("[Environtment] Error loading environment variables");
