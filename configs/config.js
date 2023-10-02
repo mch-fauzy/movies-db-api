@@ -8,7 +8,8 @@ const Environtment = () => {
             dotenv.config({ path: '.env' });
             logger.info('[Environtment] Loaded default environment: .env');
         } else {
-            logger.warn('[Environtment] Default .env file not found');
+            logger.error('[Environtment] Default .env file not found');
+            process.exit(1);
         }
     } catch {
         logger.error("[Environtment] Error loading environment variables");
