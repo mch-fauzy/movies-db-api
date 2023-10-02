@@ -1,5 +1,4 @@
 const pool = require('../infras/postgresql');
-const { UserModel } = require('../models');
 const { encryptPassword, decryptPassword } = require('../utils');
 const jwt = require('jsonwebtoken');
 const { logger } = require('../utils')
@@ -19,7 +18,7 @@ class UserRepository {
             const totalRows = parseInt((await pool.query('SELECT COUNT(*) FROM users')).rows[0].count);
             const totalPages = Math.ceil(totalRows / size);
 
-            const users = result.rows.map(row => UserModel.fromDatabase(row));
+            const users = result.rows
 
             return {
                 data: users,
