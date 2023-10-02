@@ -30,6 +30,7 @@
   "homepage": "https://github.com/mch-fauzy/movies-db-api#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "http-status-codes": "^2.3.0",
     "jsonwebtoken": "^9.0.1",
