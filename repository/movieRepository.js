@@ -1,5 +1,4 @@
 const pool = require('../infras/postgresql');
-const { MovieModel } = require('../models/index');
 
 class MovieRepository {
     static async getMovies(page = 1, size = 10) {
@@ -13,7 +12,8 @@ class MovieRepository {
             const totalRows = parseInt((await pool.query('SELECT COUNT(*) FROM movies')).rows[0].count);
             const totalPages = Math.ceil(totalRows / size);
 
-            const movies = result.rows.map(row => MovieModel.fromDatabase(row));
+            const movies = result.rows
+
             return {
                 data: movies,
                 totalData: totalRows,
