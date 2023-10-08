@@ -38,7 +38,7 @@ const providePostgresConn = async () => {
     const client = await pool.connect();
     await client.query('SELECT 1');
     client.release();
-    logger.info(`Connected to the ${CONFIG.SERVER.ENV} database dbName=${dbConfig.database} host=${dbConfig.host} port=${dbConfig.port}`);
+    logger.info(`Connected to the ${CONFIG.SERVER.ENV} database, dbName=${dbConfig.database}, host=${dbConfig.host}, port=${dbConfig.port}`);
   } catch (err) {
     logger.error('[providePostgresConn] Failed connecting to the database:', err);
     process.exit(1); // Exit the application if the database connection fails

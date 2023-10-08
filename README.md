@@ -22,7 +22,7 @@ You can try the API in [here](https://movies-db-api.vercel.app) or deploy it man
 - Secure authentication using JWT (JSON Web Tokens)
 - Create, Read, Update, and Delete operations for movie records
 - Authorization for admin-only actions
-- Upload photos for movie records
+- Upload image for movie records
 
 ## Getting Started
 
@@ -42,7 +42,7 @@ To get started with the API, follow the steps below:
    npm install
    ```
 
-4. Edit the database configuration in `.env` with your PostgreSQL credentials and configure the setting in `./infras/postgresql.js`.
+4. Edit the database configuration in `.env.development` with your PostgreSQL credentials and configure the setting in `./infras/postgresql.js`.
 5. Import the required database schema from `migrations/movie-database.sql` into your PostgreSQL database using a tool like pgAdmin's restore function.
 6. Start the server: 
     ```
@@ -56,13 +56,10 @@ The API will be available at [http://localhost:3000](http://localhost:3000).
 To access the API documentation using Swagger, follow these steps:
 
 1. Make sure the server is running locally.
-2. Open your web browser and go to [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/).
+2. Open your web browser and go to [http://localhost:3000/](http://localhost:3000/).
 3. You'll see the Swagger UI interface with a list of endpoints, request parameters, and example requests/responses.
-4. You can interact with the API directly from the Swagger interface.
-
-**NOTE: Swagger documentation does not have upload file Endpoint**
-
-Certainly! Here's a simplified version of the API Endpoints section for easier readability:
+4. In Swagger, set your servers to `http://localhost:3000` to access your local database.
+5. You can interact with the API directly from the Swagger interface.
 
 ## API Endpoints
 
@@ -78,18 +75,18 @@ Certainly! Here's a simplified version of the API Endpoints section for easier r
 - **Description:** User login.
 - **Request Body Parameters:** `email`, `password`
 - **Example:**
+
+**Admin:**
 ```
-Admin:
-    email: admin@gmail.com
-    password: adminpassword
+email: admin@gmail.com
+password: adminpassword
 ```
 
+**Non-Admin:**
 ```
-Non-Admin:
-    email: non.admin@gmail.com
-    password: nonadminpassword
+email: non.admin@gmail.com
+password: nonadminpassword
 ```
-
 
 ### Users Endpoints
 
@@ -113,18 +110,11 @@ Non-Admin:
 - **Authentication:** Requires authentication and admin role.
 - **Request Body Parameters:** `title`, `genres`, `year`
 
-#### Upload Movie Photo
+#### Upload Movie Image
 - **Endpoint:** `POST /v1/movies/:id/upload`
-- **Description:** Upload a photo for a movie.
+- **Description:** Upload an image for a movie. The uploaded image is stored in the `public/images` directory and associated with the specified movie. Image can be accessed in `http://localhost:3000/images/<image-name>.<image-extension>`
 - **Authentication:** Requires authentication and admin role.
-- **Request Body Parameters:** `file` (photo)
-- **Path Parameter:** `id` (movie ID)
-- **Notes:** The uploaded image is stored in the `public/images` directory and associated with the specified movie.
-
-#### Delete a Movie
-- **Endpoint:** `DELETE /v1/movies/:id`
-- **Description:** Delete a movie by ID.
-- **Authentication:** Requires authentication and admin role.
+- **Request Body Parameter:** `image`
 - **Path Parameter:** `id` (movie ID)
 
 #### Update a Movie
@@ -133,6 +123,12 @@ Non-Admin:
 - **Authentication:** Requires authentication and admin role.
 - **Path Parameter:** `id` (movie ID)
 - **Request Body Parameters:** `title`, `genres`, `year`
+
+#### Delete a Movie
+- **Endpoint:** `DELETE /v1/movies/:id`
+- **Description:** Delete a movie by ID.
+- **Authentication:** Requires authentication and admin role.
+- **Path Parameter:** `id` (movie ID)
 
 ## Error Handling
 

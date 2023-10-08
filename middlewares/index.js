@@ -1,8 +1,8 @@
 const { authenticateToken, authorizeAdmin } = require('./auth');
-const upload = require('./upload');
+const uploadImage = require('./upload');
 
 module.exports = {
     authenticateToken,
     authorizeAdmin,
-    upload
+    uploadImage
 };

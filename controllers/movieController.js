@@ -23,20 +23,20 @@ class MovieController {
         }
     }
 
-    static async uploadMoviePhoto(req, res) {
+    static async uploadMovieImage(req, res) {
         try {
             const { id } = req.params;
-            const filename = req.file.filename;
+            const { filename } = req.file;
 
             if (!filename) {
                 throw new Error('No file uploaded');
             }
-    
-            await MovieService.uploadMoviePhoto(id, filename);
+            
+            const imageURL = `${imageBaseUrl}/${filename}`;
 
-            const photoURL = `${imageBaseUrl}/${filename}`;
-    
-            res.status(200).json({ message: 'Movie photo uploaded successfully', photoURL });
+            await MovieService.uploadMovieImage(id, imageURL);
+
+            res.status(200).json({ message: 'Movie image uploaded successfully'});
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
