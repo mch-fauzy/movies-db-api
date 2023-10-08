@@ -1,4 +1,4 @@
-const pool = require('../infras/postgresql');
+const infras = require('../infras');
 
 class MovieRepository {
     static async getMovies(page = 1, size = 10) {
@@ -7,9 +7,9 @@ class MovieRepository {
             size = parseInt(size);
             const offset = (page - 1) * size;
             const query = 'SELECT id, title, genres, year, photo FROM movies LIMIT $1 OFFSET $2';
-            const result = await pool.query(query, [size, offset]);
+            const result = await infras.pool.query(query, [size, offset]);
 
-            const totalRows = parseInt((await pool.query('SELECT COUNT(*) FROM movies')).rows[0].count);
+            const totalRows = parseInt((await infras.pool.query('SELECT COUNT(*) FROM movies')).rows[0].count);
             const totalPages = Math.ceil(totalRows / size);
 
             const movies = result.rows
@@ -35,11 +35,11 @@ class MovieRepository {
             throw new Error('title, genres and year fields are required');
         }
     
-          const maxIdResult = await pool.query('SELECT MAX(id) FROM movies');
+          const maxIdResult = await infras.pool.query('SELECT MAX(id) FROM movies');
           const maxId = maxIdResult.rows[0].max || 0;
           const id = maxId + 1;
     
-          await pool.query(query, [id, title, genres, year]);
+          await infras.pool.query(query, [id, title, genres, year]);
         } catch (error) {
           throw error;
         }
@@ -48,14 +48,14 @@ class MovieRepository {
     static async uploadMoviePhoto(id, filename) {
         try {
             const movieExistsQuery = 'SELECT id FROM movies WHERE id = $1';
-            const movieExistsResult = await pool.query(movieExistsQuery, [id]);
+            const movieExistsResult = await infras.pool.query(movieExistsQuery, [id]);
 
             if (movieExistsResult.rows.length === 0) {
                 throw new Error('Movie not found');
             }
 
             const query = 'UPDATE movies SET photo = $2 WHERE id = $1';
-            await pool.query(query, [id, filename]);
+            await infras.pool.query(query, [id, filename]);
 
             return filename;
         } catch (error) {
@@ -66,14 +66,14 @@ class MovieRepository {
     static async deleteMovieById(id) {
         try {
             const movieExistsQuery = 'SELECT id FROM movies WHERE id = $1';
-            const movieExistsResult = await pool.query(movieExistsQuery, [id]);
+            const movieExistsResult = await infras.pool.query(movieExistsQuery, [id]);
 
             if (movieExistsResult.rows.length === 0) {
                 throw new Error('Movie not found');
             }
 
             const deleteQuery = 'DELETE FROM movies WHERE id = $1';
-            await pool.query(deleteQuery, [id]);
+            await infras.pool.query(deleteQuery, [id]);
         } catch (error) {
             throw error;
         }
@@ -82,7 +82,7 @@ class MovieRepository {
     static async updateMovieById(id, title, genres, year) {
         try {
             const movieExistsQuery = 'SELECT id FROM movies WHERE id = $1';
-            const movieExistsResult = await pool.query(movieExistsQuery, [id]);
+            const movieExistsResult = await infras.pool.query(movieExistsQuery, [id]);
 
             if (movieExistsResult.rows.length === 0) {
                 throw new Error('Movie not found');
@@ -93,7 +93,7 @@ class MovieRepository {
             }
 
             const updateQuery = 'UPDATE movies SET title = $2, genres = $3, year = $4 WHERE id = $1';
-            await pool.query(updateQuery, [id, title, genres, year]);
+            await infras.pool.query(updateQuery, [id, title, genres, year]);
         } catch (error) {
             throw error;
         }

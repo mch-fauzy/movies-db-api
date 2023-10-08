@@ -4,6 +4,9 @@ seeders/
 migrations/*.Identifier
 *.yaml
 *.Identifier
-.env
 *.txt
 .vercel
+.env
+.env.development
+.env.production
+.env.test
