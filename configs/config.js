@@ -39,5 +39,6 @@ module.exports = {
         USER: process.env.POSTGRES_USER,
         PASSWORD: process.env.POSTGRES_PASSWORD,
     },
+    DOCS: process.env.DOCS,
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
 };
