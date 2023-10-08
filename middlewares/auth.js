@@ -6,6 +6,8 @@ const { logger } = require('../utils')
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers[SHARED.AUTHORIZATION_HEADER];
+    
+    // Check if authHeader is exist and get the token only (Bearer <Token>)
     const token = authHeader && authHeader.split(' ')[1];
 
     if (token == null) {
@@ -18,6 +20,8 @@ function authenticateToken(req, res, next) {
             logger.error('[authenticateToken] Invalid token:', err);
             return res.status(StatusCodes.UNAUTHORIZED).json({ errMessage: 'Invalid token' });
         }
+        
+        // Assign user to request
         req.user = user;
         next();
     });
@@ -25,7 +29,7 @@ function authenticateToken(req, res, next) {
 
 function authorizeAdmin(req, res, next) {
     if (req.user.role.toLowerCase() !== SHARED.ROLE.ADMIN) {
-        return res.status(StatusCodes.FORBIDDEN).json({ errMessage: 'Unauthorized. Only admin can perform this action.' });
+        return res.status(StatusCodes.FORBIDDEN).json({ errMessage: 'Unauthorized: Only admin can perform this action' });
     }
     next();
 }

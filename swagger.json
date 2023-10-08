@@ -8,6 +8,9 @@
   "servers": [
     {
       "url": "https://movies-db-api.vercel.app/"
+    },
+    {
+      "url": "http://localhost:3000"
     }
   ],
   "tags": [
