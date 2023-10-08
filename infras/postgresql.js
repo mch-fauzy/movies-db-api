@@ -3,6 +3,7 @@ const CONFIG = require('../configs');
 const { logger } = require('../utils');
 
 let dbConfig;
+logger.info(`Env: ${CONFIG.SERVER.ENV}`);
 
 if (CONFIG.SERVER.ENV === 'production') {
   dbConfig = {
