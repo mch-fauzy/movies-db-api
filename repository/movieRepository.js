@@ -6,7 +6,7 @@ class MovieRepository {
             page = parseInt(page);
             size = parseInt(size);
             const offset = (page - 1) * size;
-            const query = 'SELECT id, title, genres, year, photo FROM movies LIMIT $1 OFFSET $2';
+            const query = 'SELECT id, title, genres, year, image FROM movies LIMIT $1 OFFSET $2';
             const result = await infras.pool.query(query, [size, offset]);
 
             const totalRows = parseInt((await infras.pool.query('SELECT COUNT(*) FROM movies')).rows[0].count);
@@ -16,11 +16,13 @@ class MovieRepository {
 
             return {
                 data: movies,
-                totalData: totalRows,
-                totalPages: totalPages,
-                currentPage: page,
-                nextPage: page < totalPages ? page + 1 : null,
-                previousPage: page > 1 ? page - 1 : null,
+                metadata: {
+                    totalData: totalRows,
+                    totalPages: totalPages,
+                    currentPage: page,
+                    nextPage: page < totalPages ? page + 1 : null,
+                    previousPage: page > 1 ? page - 1 : null,
+                }
             };
         } catch (error) {
             throw error;
@@ -45,7 +47,7 @@ class MovieRepository {
         }
       }
 
-    static async uploadMoviePhoto(id, filename) {
+    static async uploadMovieImage(id, filename) {
         try {
             const movieExistsQuery = 'SELECT id FROM movies WHERE id = $1';
             const movieExistsResult = await infras.pool.query(movieExistsQuery, [id]);
@@ -54,7 +56,7 @@ class MovieRepository {
                 throw new Error('Movie not found');
             }
 
-            const query = 'UPDATE movies SET photo = $2 WHERE id = $1';
+            const query = 'UPDATE movies SET image = $2 WHERE id = $1';
             await infras.pool.query(query, [id, filename]);
 
             return filename;

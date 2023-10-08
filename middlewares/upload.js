@@ -1,5 +1,6 @@
 const multer = require('multer');
 const path = require('path');
+const { SHARED } = require('../utils')
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -13,6 +14,6 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage: storage });
+const uploadImage = multer({ storage: storage }).single(SHARED.MULTER_UPLOAD.IMAGE);
 
-module.exports = upload;
+module.exports = uploadImage;

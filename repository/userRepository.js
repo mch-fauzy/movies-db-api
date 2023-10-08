@@ -19,11 +19,13 @@ class UserRepository {
 
             return {
                 data: users,
-                totalData: totalRows,
-                totalPages: totalPages,
-                currentPage: page,
-                nextPage: page < totalPages ? page + 1 : null,
-                previousPage: page > 1 ? page - 1 : null,
+                metadata: {
+                    totalData: totalRows,
+                    totalPages: totalPages,
+                    currentPage: page,
+                    nextPage: page < totalPages ? page + 1 : null,
+                    previousPage: page > 1 ? page - 1 : null,
+                }
             };
         } catch (err) {
             if (!err.customError) {

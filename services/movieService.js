@@ -17,9 +17,9 @@ class MovieService {
         }
     }
 
-    static async uploadMoviePhoto(id, filename) {
+    static async uploadMovieImage(id, filename) {
         try {
-            await MovieRepository.uploadMoviePhoto(id, filename);
+            await MovieRepository.uploadMovieImage(id, filename);
         } catch (error) {
             throw error;
         }

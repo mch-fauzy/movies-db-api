@@ -6,6 +6,9 @@ const SHARED = {
       NON_ADMIN: "non-admin",
       ADMIN: "admin",
     },
+    MULTER_UPLOAD: {
+      IMAGE: "image",
+    },
     AUTHORIZATION_HEADER: "authorization",
   };
   
