@@ -25,6 +25,9 @@ module.exports = {
         PORT: process.env.SERVER_PORT,
         ENV: process.env.SERVER_ENV,
     },
+    APP: {
+        URL: process.env.APP_URL,
+    },
     POSTGRES: {
         HOST: process.env.DB_HOST,
         PORT: process.env.DB_PORT,

@@ -64,6 +64,7 @@ class UserRepository {
         }
     }
 
+    // move login to service, change it to check user by email
     static async loginUser(email, password) {
         try {
             const query = 'SELECT id, email, password, role FROM users WHERE email = $1';
@@ -89,7 +90,6 @@ class UserRepository {
                 logger.error(`[UserRepository - loginUser] Internal server error: ${err.message}`);
                 throw new InternalError("Internal server error");
             } else {
-                console.log(err.customError)
                 throw err;
             }
         }
