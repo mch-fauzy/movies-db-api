@@ -9,6 +9,9 @@ const SHARED = {
     MULTER_UPLOAD: {
       IMAGE: "image",
     },
+    REGEX_PTRN: {
+      WHITESPACE: /\s+/g,
+    },
     AUTHORIZATION_HEADER: "authorization",
   };
   

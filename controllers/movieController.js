@@ -1,6 +1,5 @@
 const { MovieService } = require('../services/index');
-
-const imageBaseUrl = '/images'; // Define the base URL for your images
+const CONFIG = require('../configs');
 
 class MovieController {
     static async getMovies(req, res) {
@@ -25,14 +24,26 @@ class MovieController {
 
     static async uploadMovieImage(req, res) {
         try {
+            // Need to convert to dto and validate request params
             const { id } = req.params;
-            const { filename } = req.file;
 
-            if (!filename) {
-                throw new Error('No file uploaded');
+            // Check if filename is valid
+            if (!req.file) {
+                return res.status(400).json({ error: 'File is not exist' });
             }
             
-            const imageURL = `${imageBaseUrl}/${filename}`;
+            const { filename, isFilenameValid, isFiletypeValid} = req.file;
+            // Check if filename is valid
+            if (!isFilenameValid) {
+                return res.status(400).json({ error: 'Filename is not valid' });
+            }
+
+            // Check if filetype is an image
+            if (!isFiletypeValid) {
+                return res.status(400).json({ error: 'Only image files are allowed' });
+            }
+            
+            const imageURL = `${CONFIG.APP.URL}/images/${filename}`;
 
             await MovieService.uploadMovieImage(id, imageURL);
 
