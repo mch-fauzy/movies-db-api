@@ -28,6 +28,10 @@ module.exports = {
     APP: {
         URL: process.env.APP_URL,
     },
+    IMG: {
+        STATIC_LOC: process.env.IMG_STATIC_LOC,
+        STATIC: process.env.IMG_STATIC,
+    },
     POSTGRES: {
         HOST: process.env.DB_HOST,
         PORT: process.env.DB_PORT,
