@@ -32,7 +32,7 @@ function imageValidation(req, file, cb){
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     // Specify the directory to store the uploaded files
-    cb(null, CONFIG.IMG.STATIC_LOC); 
+    cb(null, CONFIG.IMG.STORAGE_PATH); 
   },
   filename: function (req, file, cb) {
     cb(null, file.filename);

@@ -27,10 +27,11 @@ module.exports = {
     },
     APP: {
         URL: process.env.APP_URL,
+        STATIC: process.env.APP_STATIC,
     },
     IMG: {
-        STATIC_LOC: process.env.IMG_STATIC_LOC,
-        STATIC: process.env.IMG_STATIC,
+        STORAGE_PATH: process.env.IMG_STORAGE_PATH,
+        STATIC_PATH: process.env.IMG_STATIC_PATH,
     },
     POSTGRES: {
         HOST: process.env.DB_HOST,
