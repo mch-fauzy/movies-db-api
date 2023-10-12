@@ -11,7 +11,7 @@ app.use(cors());
 // Middleware
 app.use(express.json());
 app.use(morgan('tiny'));
-app.use(express.static(CONFIG.IMG.STATIC));
+app.use(express.static(CONFIG.APP.STATIC));
 
 app.use('/', routes);
 

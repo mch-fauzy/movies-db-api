@@ -43,7 +43,7 @@ class MovieController {
                 return res.status(400).json({ error: 'Only image files are allowed' });
             }
             
-            const imageURL = `${CONFIG.APP.URL}/images/${filename}`;
+            const imageURL = `${CONFIG.IMG.STATIC_PATH}/${filename}`;
 
             await MovieService.uploadMovieImage(id, imageURL);
 
