@@ -33,7 +33,7 @@ v1Routes.forEach((route) => {
 });
 
 // API docs
-if (CONFIG.DOCS === "enabled") {
+if (CONFIG.APP.DOCS === "enabled") {
     swaggerRoutes.forEach((route) => {
         router.use(route.path, route.route, route.docs);
         logger.info(`Swagger documentation enabled. url=${CONFIG.APP.URL}${route.path}`);

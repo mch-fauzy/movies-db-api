@@ -220,18 +220,18 @@
         }
       }
     },
-    "/v1/movies/{id}/upload": {
+    "/v1/movies/{id}/upload-local": {
       "post": {
         "tags": [
           "movies"
         ],
-        "summary": "Upload movie image by ID",
-        "operationId": "uploadMovieImageById",
+        "summary": "Upload movie image by ID to Local Storage",
+        "operationId": "uploadMovieImageByIdToLocal",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "ID of the movie to upload the image",
+            "description": "ID of the movie to upload the image to Local Storage",
             "required": true,
             "schema": {
               "type": "integer"
@@ -243,7 +243,59 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/movieUploadImage"
+                "$ref": "#/components/schemas/movieUploadImageToLocal"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Movie not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/movies/{id}/upload-cloud": {
+      "post": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "Upload movie image by ID to Cloud Storage",
+        "operationId": "uploadMovieImageByIdToCloud",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the movie to upload the image to Cloud Storage",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/movieUploadImageToCloud"
               }
             }
           }
@@ -420,7 +472,16 @@
           }
         }
       },
-      "movieUploadImage": {
+      "movieUploadImageToLocal": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "movieUploadImageToCloud": {
         "type": "object",
         "properties": {
           "image": {

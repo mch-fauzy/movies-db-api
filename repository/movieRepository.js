@@ -47,7 +47,7 @@ class MovieRepository {
         }
       }
 
-    static async uploadMovieImage(id, filename) {
+    static async uploadMovieImage(id, imageURL) {
         try {
             const movieExistsQuery = 'SELECT id FROM movies WHERE id = $1';
             const movieExistsResult = await infras.pool.query(movieExistsQuery, [id]);
@@ -57,9 +57,7 @@ class MovieRepository {
             }
 
             const query = 'UPDATE movies SET image = $2 WHERE id = $1';
-            await infras.pool.query(query, [id, filename]);
-
-            return filename;
+            await infras.pool.query(query, [id, imageURL]);
         } catch (error) {
             throw error;
         }

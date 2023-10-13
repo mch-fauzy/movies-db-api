@@ -28,10 +28,16 @@ module.exports = {
     APP: {
         URL: process.env.APP_URL,
         STATIC: process.env.APP_STATIC,
+        NAME: process.env.APP_NAME,
+        IMG_STORAGE_PATH: process.env.APP_IMG_STORAGE_PATH,
+        IMG_STATIC_URL: process.env.APP_IMG_STATIC_URL,
+        DOCS: process.env.APP_DOCS,
+        JWT_ACCESS_KEY: process.env.APP_JWT_ACCESS_KEY,
     },
-    IMG: {
-        STORAGE_PATH: process.env.IMG_STORAGE_PATH,
-        STATIC_PATH: process.env.IMG_STATIC_PATH,
+    CLOUDINARY: {
+        CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+        API_KEY: process.env.CLOUDINARY_API_KEY,
+        API_SECRET: process.env.CLOUDINARY_API_SECRET,
     },
     POSTGRES: {
         HOST: process.env.DB_HOST,
@@ -47,6 +53,4 @@ module.exports = {
         USER: process.env.POSTGRES_USER,
         PASSWORD: process.env.POSTGRES_PASSWORD,
     },
-    DOCS: process.env.DOCS,
-    JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
 };

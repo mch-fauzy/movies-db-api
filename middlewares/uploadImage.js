@@ -1,7 +1,6 @@
 const multer = require('multer');
-const path = require('path');
-const { SHARED } = require('../utils')
-const CONFIG = require('../configs')
+const { SHARED } = require('../utils');
+const CONFIG = require('../configs');
 
 function imageValidation(req, file, cb){
   const filename = file.originalname.replace(SHARED.REGEX_PTRN.WHITESPACE, '-');;
@@ -28,20 +27,31 @@ function imageValidation(req, file, cb){
   cb(null, true);
 }
 
-// Configure multer for file uploads
-const storage = multer.diskStorage({
+// For Local system
+const localStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     // Specify the directory to store the uploaded files
-    cb(null, CONFIG.IMG.STORAGE_PATH); 
+    cb(null, CONFIG.APP.IMG_STORAGE_PATH); 
   },
   filename: function (req, file, cb) {
     cb(null, file.filename);
   },
 });
 
-const uploadImage = multer({ 
+const uploadImageToLocal = multer({ 
   fileFilter: imageValidation,
-  storage: storage,
+  storage: localStorage,
 }).single(SHARED.MULTER_UPLOAD.IMAGE);
 
-module.exports = uploadImage;
+// For Cloud
+const cloudStorage = multer.memoryStorage();
+
+const uploadImageToCloud = multer({ 
+  fileFilter: imageValidation,
+  storage: cloudStorage,
+}).single(SHARED.MULTER_UPLOAD.IMAGE);
+
+module.exports = {
+  uploadImageToLocal,
+  uploadImageToCloud,
+}

@@ -78,7 +78,7 @@ class UserRepository {
             const user = result.rows[0];
             const decryptedPassword = decryptPassword(user.password)
             if (user && decryptedPassword === password) {
-                const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, CONFIG.JWT_SECRET_KEY, { expiresIn: '1h' });
+                const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, CONFIG.APP.JWT_ACCESS_KEY, { expiresIn: '1h' });
                 return token;
             } else {
                 logger.error("[UserRepository - loginUser] Incorrect password");
@@ -91,7 +91,7 @@ class UserRepository {
                 throw new InternalError("Internal server error");
             } else {
                 throw err;
-            }
+        	}
         }
     }
 }

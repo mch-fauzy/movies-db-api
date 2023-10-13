@@ -1,10 +1,8 @@
 # Movies CRUD API with Authentication and Authorization
 
-This is a CRUD (Create, Read, Update, Delete) API for managing movie records with user authentication. The API allows you to perform various operations on movies and users using different endpoints.
+This is a CRUD (Create, Read, Update, Delete) API for managing movie records with user authentication. The API allows you to perform various operations on movies and users using different endpoints, also including upload an image to local or cloud storage.
 
 You can try the API in [here](https://movies-db-api.vercel.app) or deploy it manually below.
-
-**Note: This is for mock only, adjustments are needed if you want to use it in a production environment**
 
 ## Table of Contents
 
@@ -22,7 +20,7 @@ You can try the API in [here](https://movies-db-api.vercel.app) or deploy it man
 - Secure authentication using JWT (JSON Web Tokens)
 - Create, Read, Update, and Delete operations for movie records
 - Authorization for admin-only actions
-- Upload image for movie records
+- Upload image for movie records into local or cloud storage
 
 ## Getting Started
 
@@ -41,10 +39,10 @@ To get started with the API, follow the steps below:
    ```
    npm install
    ```
-
-4. Edit the database configuration in `.env.development` with your PostgreSQL credentials and configure the setting in `./infras/postgresql.js`.
-5. Import the required database schema from `migrations/movie-database.sql` into your PostgreSQL database using a tool like pgAdmin's restore function.
-6. Start the server: 
+4. (Optional) Sign-up and configure your cloud storage in [https://cloudinary.com/](Cloudinary) (or you can use other cloud storage) if you want to use `/v1/movies/:id/upload-cloud` endpoint.
+5. Edit the database configuration in `.env.development` with your PostgreSQL credentials and configure the setting in `./infras/postgresql.js`.
+6. Import the required database schema from `migrations/movie-database.sql` into your PostgreSQL database using a tool like pgAdmin's restore function.
+7. Start the server: 
     ```
     npm run dev
     ```
@@ -76,17 +74,21 @@ To access the API documentation using Swagger, follow these steps:
 - **Request Body Parameters:** `email`, `password`
 - **Example:**
 
-**Admin:**
-```
-email: admin@gmail.com
-password: adminpassword
-```
+    **Admin:**
+    ```
+    {
+        "email":"admin@gmail.com",
+        "password":"adminpassword"
+    }
+    ```
 
-**Non-Admin:**
-```
-email: non.admin@gmail.com
-password: nonadminpassword
-```
+    **Non-Admin:**
+    ```
+    {
+        "email":"non.admin@gmail.com",
+        "password":"nonadminpassword"
+    }
+    ```
 
 ### Users Endpoints
 
@@ -110,9 +112,16 @@ password: nonadminpassword
 - **Authentication:** Requires authentication and admin role.
 - **Request Body Parameters:** `title`, `genres`, `year`
 
-#### Upload Movie Image
-- **Endpoint:** `POST /v1/movies/:id/upload`
-- **Description:** Upload an image for a movie. The uploaded image is stored in the `public/images` directory and associated with the specified movie. Image can be accessed in `http://localhost:3000/images/<image-name>.<image-extension>`
+#### Upload Movie Image to Local Storage
+- **Endpoint:** `POST /v1/movies/:id/upload-local`
+- **Description:** Upload an image for a movie to local storage. The uploaded image is stored in the `public/images` directory and associated with the specified movie.
+- **Authentication:** Requires authentication and admin role.
+- **Request Body Parameter:** `image`
+- **Path Parameter:** `id` (movie ID)
+
+#### Upload Movie Image to Cloud Storage
+- **Endpoint:** `POST /v1/movies/:id/upload-cloud`
+- **Description:** Upload an image for a movie to cloud storage. The uploaded image is stored in the [https://cloudinary.com/](Cloudinary) and associated with the specified movie.
 - **Authentication:** Requires authentication and admin role.
 - **Request Body Parameter:** `image`
 - **Path Parameter:** `id` (movie ID)
