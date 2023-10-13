@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/mch-fauzy/movies-db-api#readme",
   "dependencies": {
+    "cloudinary": "^1.41.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
@@ -39,6 +40,7 @@
     "multer": "^1.4.5-lts.1",
     "path": "^0.12.7",
     "pg": "^8.11.3",
+    "streamifier": "^0.1.1",
     "swagger-ui-express": "^4.6.3",
     "winston": "^3.10.0"
   }

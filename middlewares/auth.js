@@ -15,7 +15,7 @@ function authenticateToken(req, res, next) {
         return res.status(StatusCodes.UNAUTHORIZED).json({ errMessage: 'Missing token' });
     }
 
-    jwt.verify(token, CONFIG.JWT_SECRET_KEY, (err, user) => {
+    jwt.verify(token, CONFIG.APP.JWT_ACCESS_KEY, (err, user) => {
         if (err) {
             logger.error('[authenticateToken] Invalid token:', err);
             return res.status(StatusCodes.UNAUTHORIZED).json({ errMessage: 'Invalid token' });
