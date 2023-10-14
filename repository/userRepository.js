@@ -91,7 +91,7 @@ class UserRepository {
                 throw new InternalError("Internal server error");
             } else {
                 throw err;
-        	}
+            }
         }
     }
 }

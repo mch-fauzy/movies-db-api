@@ -26,26 +26,27 @@ You can try the API in [here](https://movies-db-api.vercel.app) or deploy it man
 
 To get started with the API, follow the steps below:
 
-1. Clone this repository: 
-    ```
-    git clone https://github.com/mch-fauzy/movies-db-api.git
-    ```
+1. Clone this repository:
 
-2. Navigate to the project directory: 
-    ```
-    cd movies-db-api
-    ```
+   ```
+   git clone https://github.com/mch-fauzy/movies-db-api.git
+   ```
+
+2. Navigate to the project directory:
+   ```
+   cd movies-db-api
+   ```
 3. Install the required dependencies:
    ```
    npm install
    ```
-4. (Optional) Sign-up and configure your cloud storage in [https://cloudinary.com/](Cloudinary) (or you can use other cloud storage) if you want to use `/v1/movies/:id/upload-cloud` endpoint.
+4. (Optional) Sign-up and configure your cloud storage in [https://cloudinary.com](Cloudinary) (or you can use other cloud storage) if you want to use `/v1/movies/:id/upload-cloud` endpoint.
 5. Edit the database configuration in `.env.development` with your PostgreSQL credentials and configure the setting in `./infras/postgresql.js`.
 6. Import the required database schema from `migrations/movie-database.sql` into your PostgreSQL database using a tool like pgAdmin's restore function.
-7. Start the server: 
-    ```
-    npm run dev
-    ```
+7. Start the server:
+   ```
+   npm run dev
+   ```
 
 The API will be available at [http://localhost:3000](http://localhost:3000).
 
@@ -64,35 +65,40 @@ To access the API documentation using Swagger, follow these steps:
 ### Public Endpoints
 
 #### Register a New User
+
 - **Endpoint:** `POST /v1/auth/register`
 - **Description:** Register a new user (first admin can be seeded)
 - **Request Body Parameters:** `email`, `gender`, `password`
 
 #### Login
+
 - **Endpoint:** `POST /v1/auth/login`
 - **Description:** User login.
 - **Request Body Parameters:** `email`, `password`
 - **Example:**
 
-    **Admin:**
-    ```
-    {
-        "email":"admin@gmail.com",
-        "password":"adminpassword"
-    }
-    ```
+  **Admin:**
 
-    **Non-Admin:**
-    ```
-    {
-        "email":"non.admin@gmail.com",
-        "password":"nonadminpassword"
-    }
-    ```
+  ```
+  {
+      "email":"admin@gmail.com",
+      "password":"adminpassword"
+  }
+  ```
+
+  **Non-Admin:**
+
+  ```
+  {
+      "email":"non.admin@gmail.com",
+      "password":"nonadminpassword"
+  }
+  ```
 
 ### Users Endpoints
 
 #### Get All Users
+
 - **Endpoint:** `GET /v1/users`
 - **Description:** Get all users with pagination.
 - **Authentication:** Requires authentication and admin role.
@@ -101,18 +107,21 @@ To access the API documentation using Swagger, follow these steps:
 ### Movies Endpoints
 
 #### Get All Movies
+
 - **Endpoint:** `GET /v1/movies`
 - **Description:** Get all movies with pagination.
 - **Authentication:** Requires authentication.
 - **Query Parameters:** `page` (default: 1), `size` (default: 10)
 
 #### Insert a New Movie
+
 - **Endpoint:** `POST /v1/movies`
 - **Description:** Insert a new movie.
 - **Authentication:** Requires authentication and admin role.
 - **Request Body Parameters:** `title`, `genres`, `year`
 
 #### Upload Movie Image to Local Storage
+
 - **Endpoint:** `POST /v1/movies/:id/upload-local`
 - **Description:** Upload an image for a movie to local storage. The uploaded image is stored in the `public/images` directory and associated with the specified movie.
 - **Authentication:** Requires authentication and admin role.
@@ -120,13 +129,15 @@ To access the API documentation using Swagger, follow these steps:
 - **Path Parameter:** `id` (movie ID)
 
 #### Upload Movie Image to Cloud Storage
+
 - **Endpoint:** `POST /v1/movies/:id/upload-cloud`
-- **Description:** Upload an image for a movie to cloud storage. The uploaded image is stored in the [https://cloudinary.com/](Cloudinary) and associated with the specified movie.
+- **Description:** Upload an image for a movie to cloud storage. The uploaded image is stored in the [https://cloudinary.com](Cloudinary) and associated with the specified movie.
 - **Authentication:** Requires authentication and admin role.
 - **Request Body Parameter:** `image`
 - **Path Parameter:** `id` (movie ID)
 
 #### Update a Movie
+
 - **Endpoint:** `PUT /v1/movies/:id`
 - **Description:** Update a movie by ID.
 - **Authentication:** Requires authentication and admin role.
@@ -134,6 +145,7 @@ To access the API documentation using Swagger, follow these steps:
 - **Request Body Parameters:** `title`, `genres`, `year`
 
 #### Delete a Movie
+
 - **Endpoint:** `DELETE /v1/movies/:id`
 - **Description:** Delete a movie by ID.
 - **Authentication:** Requires authentication and admin role.
