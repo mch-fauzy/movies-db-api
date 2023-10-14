@@ -16,7 +16,7 @@ class MovieController {
         try {
             const { title, genres, year } = req.body;
             await MovieService.insertMovie(title, genres, year);
-            res.status(201).json({ message: 'Movie inserted successfully' });
+            res.status(201).json({ message: 'Success' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -31,8 +31,8 @@ class MovieController {
             if (!req.file) {
                 return res.status(400).json({ error: 'File is not exist' });
             }
-            
-            const { filename, isFilenameValid, isFiletypeValid, buffer} = req.file;
+
+            const { filename, isFilenameValid, isFiletypeValid } = req.file;
             // Check if filename is valid
             if (!isFilenameValid) {
                 return res.status(400).json({ error: 'Filename is not valid' });
@@ -42,12 +42,11 @@ class MovieController {
             if (!isFiletypeValid) {
                 return res.status(400).json({ error: 'Only image files are allowed' });
             }
-            
-            const imageURL = `${CONFIG.APP.IMG_STATIC_URL}/${filename}`;
 
+            const imageURL = `${CONFIG.APP.IMG_STATIC_URL}/${filename}`;
             await MovieService.uploadMovieImageLocal(id, imageURL);
 
-            res.status(200).json({ message: 'Movie image uploaded successfully'});
+            res.status(201).json({ message: 'Success' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -62,8 +61,8 @@ class MovieController {
             if (!req.file) {
                 return res.status(400).json({ error: 'File is not exist' });
             }
-            
-            const { filename, isFilenameValid, isFiletypeValid, buffer} = req.file;
+
+            const { filename, isFilenameValid, isFiletypeValid, buffer } = req.file;
             // Check if filename is valid
             if (!isFilenameValid) {
                 return res.status(400).json({ error: 'Filename is not valid' });
@@ -75,17 +74,17 @@ class MovieController {
             }
 
             await MovieService.uploadMovieImageCloud(id, filename, buffer);
-            res.status(200).json({ message: 'Movie image uploaded successfully'});
+            res.status(201).json({ message: 'Success' });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
-    } 
+    }
 
     static async deleteMovieById(req, res) {
         try {
             const { id } = req.params;
             await MovieService.deleteMovieById(id);
-            res.status(200).json({ message: 'Movie deleted successfully' });
+            res.status(204).json({ message: 'Success' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -96,7 +95,7 @@ class MovieController {
             const { id } = req.params;
             const { title, genres, year } = req.body;
             await MovieService.updateMovieById(id, title, genres, year);
-            res.status(200).json({ message: 'Movie updated successfully' });
+            res.status(200).json({ message: 'Success' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

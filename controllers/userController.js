@@ -18,9 +18,9 @@ class UserController {
             // Need to convert to dto and validate request params
             const { email, gender, password, role } = req.body;
             await UserService.registerUser(email, gender, password, role);
-            res.status(StatusCodes.CREATED).json({ message: 'User registered successfully' });
+            res.status(StatusCodes.CREATED).json({ message: 'Success' });
         } catch (err) {
-            res.status(err.code).json({ errMessage: err.message }); 
+            res.status(err.code).json({ errMessage: err.message });
         }
     }
 
