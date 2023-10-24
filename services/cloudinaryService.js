@@ -16,8 +16,7 @@ class CloudinaryService {
     }
 
     static uploadImageToCloudinary(filename, buffer) {
-        this.configureCloudinary();
-
+        CloudinaryService.configureCloudinary();
         const imgUploadOptions = {
             folder: `${CONFIG.APP.NAME}/img`,
             filename_override: filename,
@@ -25,6 +24,7 @@ class CloudinaryService {
             use_filename: true,
         };
 
+        // callback function must use promise for throwing an error without stopping the app
         return new Promise((resolve, reject) => {
             const stream = cloudinary.uploader.upload_stream(
                 imgUploadOptions,
