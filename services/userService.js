@@ -1,10 +1,16 @@
 const { UserRepository } = require('../repository');
 const { logger, BadRequestError } = require('../utils');
+const { buildMetadataDTO, buildUserListResponseDTO } = require('../models/dto')
 
 class UserService {
-    static async getUsers(page, size) {
+    static async getUserList(req) {
         try {
-            return await UserRepository.getUsers(page, size);
+            const paginationFilter = req.toPaginationModel()
+            const result = await UserRepository.getUser(paginationFilter);
+            return {
+                data: buildUserListResponseDTO(result),
+                metadata: buildMetadataDTO(req.page, req.pageSize, result[0].count)
+            }
         } catch (err) {
             throw err;
         }

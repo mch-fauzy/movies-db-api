@@ -2,37 +2,33 @@ const infras = require('../infras');
 const jwt = require('jsonwebtoken');
 const { NotFoundError, AuthenticationError, ConflictError, InternalError, encryptPassword, decryptPassword, SHARED, logger } = require('../utils');
 const CONFIG = require('../configs');
+const { buildUserListModel } = require('../models')
 
 class UserRepository {
-    static async getUsers(page = 1, size = 10) {
+    static async getUser(pagination) {
         try {
-            page = parseInt(page);
-            size = parseInt(size);
-            const offset = (page - 1) * size;
-            const query = 'SELECT id, email, gender, role FROM users LIMIT $1 OFFSET $2';
-            const result = await infras.pool.query(query, [size, offset]);
+            const countUsersQuery = 'SELECT COUNT(id) AS count FROM users';
+            const selectUsersQueryWithMetadata = `
+            SELECT 
+                id,
+                email, 
+                gender, 
+                role,
+                (${countUsersQuery})
+            FROM 
+                users 
+            LIMIT $1 OFFSET $2`;
 
-            const totalRows = parseInt((await infras.pool.query('SELECT COUNT(*) FROM users')).rows[0].count);
-            const totalPages = Math.ceil(totalRows / size);
+            const offset = (pagination.page - 1) * pagination.pageSize;
+            const result = await infras.pool.query(selectUsersQueryWithMetadata, [pagination.pageSize, offset]);
 
-            const users = result.rows
-
-            return {
-                data: users,
-                metadata: {
-                    totalData: totalRows,
-                    totalPages: totalPages,
-                    currentPage: page,
-                    nextPage: page < totalPages ? page + 1 : null,
-                    previousPage: page > 1 ? page - 1 : null,
-                }
-            };
+            return buildUserListModel(result.rows)
         } catch (err) {
-            if (!err.customError) {
-                logger.error(`[UserRepository - getUsers] Internal server error: ${err.message}`);
-                throw new InternalError("Internal server error");
-            } else {
+            if (err.customError) {
                 throw err;
+            } else {
+                logger.error(`[UserRepository - getUsers] ${err.message}`);
+                throw new Error(`${err.message}`);
             }
         }
     }
@@ -65,6 +61,26 @@ class UserRepository {
     }
 
     // move login to service, change it to check user by email
+    static async isUserExistByEmail(email) {
+        const query = ```
+        SELECT 
+            id
+        FROM 
+            users 
+        WHERE 
+            email = $1
+        ```;
+
+        const result = await infras.pool.query(query, [email]);
+
+        if (result.rowCount === 0) {
+            logger.error("[UserRepository - isUserExistByEmail] User not found");
+            throw new NotFoundError('User not found');
+        }
+
+        return result;
+    }
+
     static async loginUser(email, password) {
         try {
             const query = 'SELECT id, email, password, role FROM users WHERE email = $1';
@@ -79,7 +95,9 @@ class UserRepository {
             const decryptedPassword = decryptPassword(user.password)
             if (user && decryptedPassword === password) {
                 const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, CONFIG.APP.JWT_ACCESS_KEY, { expiresIn: '1h' });
-                return token;
+                return {
+                    token: token
+                };
             } else {
                 logger.error("[UserRepository - loginUser] Incorrect password");
                 throw new AuthenticationError("Incorrect password");
