@@ -1,8 +1,8 @@
-const { ViewUserRequest, buildViewUserResponse } = require('./userDTO')
-const { buildMetadata } = require('./metadata')
+const { ViewUserRequestDTO, buildUserListResponseDTO } = require('./userDTO')
+const { buildMetadataDTO } = require('./metadata')
 
 module.exports = {
-    ViewUserRequest,
-    buildMetadata,
-    buildViewUserResponse,
+    ViewUserRequestDTO,
+    buildMetadataDTO,
+    buildUserListResponseDTO,
 }

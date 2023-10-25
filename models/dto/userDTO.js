@@ -1,9 +1,10 @@
 const { BadRequestError, SHARED } = require('../../utils');
+const { PaginationModel } = require('../../models')
 
-class ViewUserRequest {
-    constructor(queryReq) {
-        this.page = typeof queryReq.page === 'undefined' ? SHARED.PAGINATION.DEFAULTPAGE : parseInt(queryReq.page);
-        this.pageSize = typeof queryReq.pageSize === 'undefined' ? SHARED.PAGINATION.DEFAULTPAGESIZE : parseInt(queryReq.pageSize);
+class ViewUserRequestDTO {
+    constructor(req) {
+        this.page = typeof req.page === 'undefined' ? SHARED.PAGINATION.DEFAULTPAGE : parseInt(req.page);
+        this.pageSize = typeof req.pageSize === 'undefined' ? SHARED.PAGINATION.DEFAULTPAGESIZE : parseInt(req.pageSize);
     }
 
     validate() {
@@ -17,14 +18,14 @@ class ViewUserRequest {
     }
 
     toPaginationModel() {
-        return {
+        return new PaginationModel({
             page: this.page,
             pageSize: this.pageSize,
-        };
+        });
     }
 }
 
-class ViewUserResponse {
+class UserResponseDTO {
     constructor(user) {
         this.id = user.id;
         this.email = user.email;
@@ -33,20 +34,20 @@ class ViewUserResponse {
     }
 }
 
-function buildViewUserResponse(userList) {
+function buildUserListResponseDTO(userList) {
     const userListResponse = [];
     for (const user of userList) {
-        userListResponse.push(new ViewUserResponse(user));
+        userListResponse.push(new UserResponseDTO(user));
     }
     return userListResponse;
 }
 
 // function above is same as below
-// function buildViewUserResponse(userList) {
-//     return userList.map((user) => new ViewUserResponse(user));
+// function buildUserListResponseDTO(userList) {
+//     return userList.map((user) => new UserResponseDTO(user));
 // }
 
 module.exports = {
-    ViewUserRequest,
-    buildViewUserResponse
+    ViewUserRequestDTO,
+    buildUserListResponseDTO
 }

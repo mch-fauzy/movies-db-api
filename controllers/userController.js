@@ -1,11 +1,11 @@
 const { UserService } = require('../services');
 const { StatusCodes } = require('http-status-codes');
-const { ViewUserRequest } = require('../models/dto')
+const { ViewUserRequestDTO } = require('../models/dto')
 
 class UserController {
     static async viewUser(req, res) {
         try {
-            const viewUserRequest = new ViewUserRequest(req.query)
+            const viewUserRequest = new ViewUserRequestDTO(req.query)
             viewUserRequest.validate()
 
             const result = await UserService.getUserList(viewUserRequest);

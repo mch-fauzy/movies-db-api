@@ -2,22 +2,27 @@ const infras = require('../infras');
 const jwt = require('jsonwebtoken');
 const { NotFoundError, AuthenticationError, ConflictError, InternalError, encryptPassword, decryptPassword, SHARED, logger } = require('../utils');
 const CONFIG = require('../configs');
+const { buildUserListModel } = require('../models')
 
 class UserRepository {
     static async getUser(pagination) {
         try {
+            const countUsersQuery = 'SELECT COUNT(id) AS count FROM users';
+            const selectUsersQueryWithMetadata = `
+            SELECT 
+                id,
+                email, 
+                gender, 
+                role,
+                (${countUsersQuery})
+            FROM 
+                users 
+            LIMIT $1 OFFSET $2`;
+
             const offset = (pagination.page - 1) * pagination.pageSize;
-            const selectUsersQuery = 'SELECT id, email, gender, role FROM users LIMIT $1 OFFSET $2';
-            const result = await infras.pool.query(selectUsersQuery, [pagination.pageSize, offset]);
+            const result = await infras.pool.query(selectUsersQueryWithMetadata, [pagination.pageSize, offset]);
 
-            const countUsersQuery = 'SELECT COUNT(id) FROM users';
-            const countResult = await infras.pool.query(countUsersQuery);
-            const totalRows = countResult.rows[0].count;
-
-            return {
-                users: result.rows,
-                count: parseInt(totalRows),
-            };
+            return buildUserListModel(result.rows)
         } catch (err) {
             if (err.customError) {
                 throw err;
