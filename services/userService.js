@@ -8,8 +8,8 @@ class UserService {
             const paginationFilter = req.toPaginationModel()
             const result = await UserRepository.getUser(paginationFilter);
             return {
-                data: buildUserListResponseDTO(result),
-                metadata: buildMetadataDTO(req.page, req.pageSize, result[0].count)
+                data: buildUserListResponseDTO(result), // Map user list response
+                metadata: buildMetadataDTO(req.page, req.pageSize, result[0].count) // Map metadata
             }
         } catch (err) {
             throw err;
