@@ -1,0 +1,5 @@
+ALTER TABLE movies
+ADD COLUMN image VARCHAR(255);
+
+ALTER TABLE movies
+DROP COLUMN photo;

@@ -42,8 +42,9 @@ To get started with the API, follow the steps below:
    ```
 4. (Optional) Sign-up and configure your cloud storage in [https://cloudinary.com](Cloudinary) (or you can use other cloud storage) if you want to use `/v1/movies/:id/upload-cloud` endpoint.
 5. Edit the database configuration in `.env.development` with your PostgreSQL credentials and configure the setting in `./infras/postgresql.js`.
-6. Import the required database schema from `migrations/movie-database.sql` into your PostgreSQL database using a tool like pgAdmin's restore function.
-7. Start the server:
+6. (Important) Import the required database schema from `migrations/movie-database.sql` into your PostgreSQL database using a tool like pgAdmin's restore function.
+7. (Important) Seed `Admin` user using sql from `migrations/admin-seed.sql` and run the sql from `migrations/add-image-column.sql` in pgAdmin or other database administration tool (e.g. DBeaver).
+8. Start the server:
    ```
    npm run dev
    ```
